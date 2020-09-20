@@ -1,0 +1,60 @@
+#+TITLE: Cryptokasten DB: Resources workflow
+#+TAGS: cryptokasten
+#+OPTIONS: ^:nil
+
+[[https://github.com/cryptokasten][file:https://img.shields.io/badge/dynamic/json.svg?url=https://api.github.com/users/cryptokasten&label=Cryptokasten&query=$.public_repos]]
+
+** Workflow
+
+#+BEGIN_SRC plantuml :file img/workflow.png :exports results
+@startuml
+[*] --> Framed
+Framed --> Downloaded
+Downloaded --> Prepared
+Prepared --> Queued
+Queued --> InProgress
+InProgress --> NeedReview
+NeedReview --> Done
+Done --> Updated
+InProgress --> Paused
+InProgress --> Canceled
+Paused --> Queued
+Canceled --> Queued
+Updated --> InProgress
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:img/workflow.png]]
+
+** Statuses
+
+- *No status*. Обращено внимание на ресурс, никаких активных действий
+  по изучению еще не предпринималось.
+
+- *Framed*. Оформлена карточка ресурса. Заполнены все поля,
+  обязательные для данного типа ресурса (или принято решение о
+  невозможности заполнения некоторых полей).
+
+- *Downloaded*. Ресурс скачан и размещен в хранилище.
+
+- *Prepared*. Ресурс подготовлен к изучению.
+
+- *Queued*. Ресурс поставлен в очередь на изучение.
+
+- *In progress*. Ресурс находится в процессе изучения.
+
+- *Need review*. Ресурс изучен, но требуется еще раз пробежаться по
+  тексту, перенести ручные примечания, и пр.
+
+- *Done*. Ресурс изучен полностью. Все интересные на текущий момент
+  мысли выписаны. Все ссылки изучены. Интересные зафиксированы.
+
+- *Updated*. Ресурс был обновлен, или необходимо повторное изучение по
+  другой причине.
+
+- *Canceled*. Изучение ресурса прекращено, причина отмечена в
+  примечании.
+
+- *Paused*. Ресурс не был до конца изучен, но и не было принято
+  решение о прекращении его изучения.
